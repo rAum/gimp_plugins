@@ -1,0 +1,26 @@
+/********************************************************************
+ *                                       (c) Andrzej Lukaszewski 2009  
+ * Gimp Plugin :
+ *             Simple plugin template with dialog
+ * 
+ * This file: filtering/processing for cpu or gpu 
+ ********************************************************************/
+#include <stdio.h>
+#include "atime.hpp"
+
+
+void cpu_process(unsigned char *buffer,int width,int height,int channels,
+		 int R)
+{
+   int mem_size=width*height*channels;
+   int idx;
+   printf("Wd=%3d Ht=%3d  Channels=%2d\n", width, height, channels);
+   ATimerStart();
+   for (idx=0; idx<mem_size; idx+=channels) {
+      buffer[idx]   = R; //255-buffer[idx];
+      buffer[idx+1] = 255-buffer[idx+1];
+      buffer[idx+2] = 255-buffer[idx+2];
+   }
+   ATimerReport("CPU filtering: %3.2f ms\n");
+}
+
